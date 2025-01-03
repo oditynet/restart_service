@@ -1,3 +1,4 @@
+import subprocess
 import tkinter as tk
 from tkinter import ttk
 from tkinter.ttk import Label
@@ -141,7 +142,7 @@ class SystemdRestart:
         #ansfile.write("[all]\n")
         for i in listcheck:
             if i[0][:6] == "Master" and i[1] == 1:
-               # print("On ",i[0])
+                print("On ",i[0])
                 for host,ipaddr in masterbutton:
                     if host == i[0]:
                         #print("ip ",ipaddr)
@@ -151,12 +152,13 @@ class SystemdRestart:
                         if srv[1] == 1:
          #                   ansfile.write(ipaddr+ansiblestring)
                             #print("systemctl restart ",srv[0])
-                            cmd="ssh root@"+ipaddr+" systemctl restart "+srv[0]
-                            print(cmd)
+                            print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
+                            #cmd="ssh root@"+ipaddr+" systemctl restart "+srv[0]
+                            #print(cmd)
                             #os.system(cmd)
 
             elif i[0][:4] == "Node" and i[1] == 1:
-               # print("On ",i[0])
+                print("On ",i[0])
                 for host,ipaddr in nodebutton:
                     if host == i[0]:
                         #print("ip ",ipaddr)
@@ -165,8 +167,9 @@ class SystemdRestart:
                     if srv[0] in nodeservice:
                         if srv[1] == 1:
           #                  ansfile.write(ipaddr + ansiblestring)
-                            cmd = "ssh root@"+ipaddr+" systemctl restart "+srv[0]
-                            print(cmd)
+                            print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
+                            #cmd = "ssh root@"+ipaddr+" systemctl restart "+srv[0]
+                            #print(cmd)
                             #os.system(cmd)
                             #print("systemctl restart ",srv[0])
 
