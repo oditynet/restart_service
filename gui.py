@@ -1,15 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.ttk import Label
+import os
+
+ansiblestring=" ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=root\n"
 
 listcheck=[]
 nodeservice=[]
 masterservice=[]
+masterbutton=[]
+nodebutton=[]
 
 class SystemdRestart:
     def __init__(self, root):
-        masterbutton=[]
-        nodebutton=[]
+        global masterbutton
+        global nodebutton
         # masterbutton = ['Master1', 'Master2','Master3']
         # nodebutton = ['Node1', 'Node2','Node3', 'Node4']
         m=0
@@ -123,26 +128,47 @@ class SystemdRestart:
         for i in listcheck:
             if i[0] == value:
                 i[1]*=(-1)
-        print(listcheck)
+        #print(listcheck)
 
     def systemdrestart(self):
         global listcheck
         global masterservice
         global nodeservice
+        global masterbutton
+        global nodebutton
+
+        #ansfile = open('inventory', 'w')
+        #ansfile.write("[all]\n")
         for i in listcheck:
             if i[0][:6] == "Master" and i[1] == 1:
-                print("On ",i[0])
+               # print("On ",i[0])
+                for host,ipaddr in masterbutton:
+                    if host == i[0]:
+                        #print("ip ",ipaddr)
+                        break
                 for srv in listcheck:
                     if srv[0] in masterservice:
                         if srv[1] == 1:
-                            print("systemctl restart ",srv[0])
+         #                   ansfile.write(ipaddr+ansiblestring)
+                            #print("systemctl restart ",srv[0])
+                            cmd="ssh root@"+ipaddr+" systemctl restart "+srv[0]
+                            print(cmd)
+                            #os.system(cmd)
 
             elif i[0][:4] == "Node" and i[1] == 1:
-                print("On ",i[0])
+               # print("On ",i[0])
+                for host,ipaddr in nodebutton:
+                    if host == i[0]:
+                        #print("ip ",ipaddr)
+                        break
                 for srv in listcheck:
                     if srv[0] in nodeservice:
                         if srv[1] == 1:
-                            print("systemctl restart ",srv[0])
+          #                  ansfile.write(ipaddr + ansiblestring)
+                            cmd = "ssh root@"+ipaddr+" systemctl restart "+srv[0]
+                            print(cmd)
+                            #os.system(cmd)
+                            #print("systemctl restart ",srv[0])
 
 if __name__ == "__main__":
     root = tk.Tk()
