@@ -7,9 +7,8 @@
 Синтаксис файла hosts:
 ```
 [Masters]
+ipaddr <any>
 ...
-[Hosts]
-...
-ip <any>
-...
+[Nodes]
+ipaddr <any>
 ```
