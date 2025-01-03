@@ -1,0 +1,11 @@
+[masters]
+192.168.1.10 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.1.11 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.1.12 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+[nodes]
+192.168.1.101 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.1.102 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.1.103 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.1.104 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.1.105 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.1.106 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
