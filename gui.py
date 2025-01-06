@@ -3,8 +3,16 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.ttk import Label
 import os
+import paramiko
+parami=1
 
-ansiblestring=" ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=root\n"
+#version=0.1.1
+
+port = 22
+username = 'root'
+password = 'root'
+
+#ansiblestring=" ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=root\n"
 
 listcheck=[]
 nodeservice=[]
@@ -42,7 +50,7 @@ class SystemdRestart:
         global listcheck
         self.root = root
         self.root.title("GUI nodes for restart services")
-        self.root.geometry("400x600")
+        self.root.geometry("400x900")
         self.root.configure(bg="#2C3E50")
         self.root.resizable(False, False)
 
@@ -137,6 +145,7 @@ class SystemdRestart:
         global nodeservice
         global masterbutton
         global nodebutton
+        global parami
 
         #ansfile = open('inventory', 'w')
         #ansfile.write("[all]\n")
@@ -152,7 +161,16 @@ class SystemdRestart:
                         if srv[1] == 1:
          #                   ansfile.write(ipaddr+ansiblestring)
                             #print("systemctl restart ",srv[0])
-                            print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
+                            if parami == 1:
+                                paramiko.util.log_to_file('paramiko.log')
+                                s = paramiko.SSHClient()
+                                s.load_system_host_keys()
+                                s.connect(ipaddr, port, username, password)
+                                stdin, stdout, stderr = s.exec_command(' systemctl restart {srv[0]}')
+                                print(stdout.read())
+                                s.close()
+                            else:
+                                print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
                             #cmd="ssh root@"+ipaddr+" systemctl restart "+srv[0]
                             #print(cmd)
                             #os.system(cmd)
@@ -167,7 +185,16 @@ class SystemdRestart:
                     if srv[0] in nodeservice:
                         if srv[1] == 1:
           #                  ansfile.write(ipaddr + ansiblestring)
-                            print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
+                            if parami == 1:
+                                paramiko.util.log_to_file('paramiko.log')
+                                s = paramiko.SSHClient()
+                                s.load_system_host_keys()
+                                s.connect(ipaddr, port, username, password)
+                                stdin, stdout, stderr = s.exec_command(' systemctl restart {srv[0]}')
+                                print(stdout.read())
+                                s.close()
+                            else:
+                                print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
                             #cmd = "ssh root@"+ipaddr+" systemctl restart "+srv[0]
                             #print(cmd)
                             #os.system(cmd)
