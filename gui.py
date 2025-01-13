@@ -165,12 +165,12 @@ class SystemdRestart:
                                 paramiko.util.log_to_file('paramiko.log')
                                 s = paramiko.SSHClient()
                                 s.load_system_host_keys()
-                                s.connect(ipaddr, port, username, password)
+                                s.connect(ipaddr, port, username, password, timeout=7)
                                 stdin, stdout, stderr = s.exec_command(' systemctl restart {srv[0]}')
                                 print(stdout.read())
                                 s.close()
                             else:
-                                print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
+                                print(subprocess.Popen(f"ssh , timeout=7 root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
                             #cmd="ssh root@"+ipaddr+" systemctl restart "+srv[0]
                             #print(cmd)
                             #os.system(cmd)
@@ -189,12 +189,12 @@ class SystemdRestart:
                                 paramiko.util.log_to_file('paramiko.log')
                                 s = paramiko.SSHClient()
                                 s.load_system_host_keys()
-                                s.connect(ipaddr, port, username, password)
+                                s.connect(ipaddr, port, username, password, timeout=7)
                                 stdin, stdout, stderr = s.exec_command(' systemctl restart {srv[0]}')
                                 print(stdout.read())
                                 s.close()
                             else:
-                                print(subprocess.Popen(f"ssh root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
+                                print(subprocess.Popen(f"ssh , timeout=7 root@{ipaddr} systemctl restart {srv[0]}", shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate())
                             #cmd = "ssh root@"+ipaddr+" systemctl restart "+srv[0]
                             #print(cmd)
                             #os.system(cmd)
